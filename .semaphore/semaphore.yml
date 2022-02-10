@@ -1,46 +1,13 @@
-# .semaphore/semaphore.yml
 version: v1.0
-name: "Gatsby pipeline"
+name: Initial Pipeline
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
-
+    os_image: ubuntu2004
 blocks:
-  - name: ⏬ Install dependencies
+  - name: 'Block #1'
     task:
       jobs:
-      - name: npm install
-        commands:
-          - checkout
-          # Reuse dependencies from cache and avoid installing them from scratch:
-          - cache restore
-          - npm install
-          - cache store
-
-  - name: 🧱 Build site
-    task:
-      jobs:
-      - name: Build
-        commands:
-          - checkout
-          - cache restore
-          # Replace this with command(s) that build your website:
-          - npm run build --prefix-path
-          # The script puts website files in directory `public`,
-          # store it in cache to propagate to deployment:
-          - cache store website-build public
-
-promotions:
-  - name: S3 Production deploy
-    pipeline_file: production-deploy-s3.yml
-    auto_promote_on:
-      - result: passed
-        branch:
-          - master
-  - name: Netlify Production deploy
-    pipeline_file: production-deploy-netlify.yml
-    auto_promote_on:
-      - result: passed
-        branch:
-          - master
+        - name: 'Job #1'
+          commands:
+            - checkout
